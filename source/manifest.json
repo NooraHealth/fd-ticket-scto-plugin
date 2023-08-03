@@ -1,0 +1,10 @@
+{
+	"name": "FD Ticket Creation",
+	"author": "Udit Mittal",
+	"version": "0.0.9",
+	"supportedFieldTypes": [
+		"text"
+	],
+	"hideDefaultRequiredMessage": false,
+	"hideDefaultConstraintMessage": false
+}
