@@ -1,5 +1,6 @@
 // References to field elements
 var patientQueryHolder = document.getElementById("patientQuery")
+var languageHolder = document.getElementById("language")
 var signUpBtn = document.getElementById('signup');
 var result = document.getElementById('statusBox');
 var reasonDiv = document.getElementById('reasonBox');
@@ -24,6 +25,7 @@ var currentAnswer = fieldProperties.CURRENT_ANSWER;
 
 headingElement.innerText = title || "FD Ticket Create";
 patientQueryHolder.innerText = patientQuery;
+languageHolder.innerText = language;
 setCurrentStatus();
 
 
@@ -199,7 +201,7 @@ function apiCall() {
   try {
     request = makeHttpObject()
     payload = createPayload(
-      patientName, phoneNumber, patientQuery, agentEmail, familyConnectedOnWa, language
+      patientName, phoneNumber, patientQuery, agentEmail, familyConnectedOnWa, projectId, language
     )
 
     request.open('POST', apiUrl, true)
