@@ -18,6 +18,7 @@ var familyConnectedOnWa = getPluginParameter('familyConnectedOnWa');
 var language = getPluginParameter('language');
 var apiToken = getPluginParameter('apiToken');
 var apiUrl = getPluginParameter('apiUrl');
+var fdUrl = getPluginParameter('fdUrl');
 var currentAnswer = fieldProperties.CURRENT_ANSWER;
 
 
@@ -76,20 +77,16 @@ signUpBtn.onclick = function () {
   apiCall()
 }
 
-function processPayload(data) {
-  var users = data['users'];
-  for (var i = 0; i < users.length; i++) {
-    var item = users[i];
-    var status = item['success'] ? 'Success' : 'Failure'
-    var statusClass = item['success'] ? 'success' : 'danger';
-    if (status == "Success") {
-      setResult(statusClass, status, "Ticket created!")
-      setAnswer("Yes");
-    }
-    else if (status == "Failure") {
-      setResult(statusClass, status, item['errors'])
-      setAnswer("No");
-    }
+function processResponse(data) {
+  var status = data['status'] == "success" ? 'Success' : 'Failure'
+  var statusClass = data['status'] == "success" ? 'success' : 'danger';
+  if (status == "Success") {
+    setResult(statusClass, status, "Ticket created!")
+    var ticketUrl = fdUrl + "/a/tickets/" + data['ticket_id'];
+    setAnswer(ticketUrl);
+  }
+  else if (status == "Failure") {
+    setResult(statusClass, status, "Ticket couldn't be created!")
   }
 }
 
@@ -141,7 +138,7 @@ function setResult(resultClass, resultText, reason = null, html = false) {
       reasonDiv.innerText = reason;
     }
     var metadata = {
-      "reason": reason, "timestamp": new Date(), "html": html
+      "status": resultText, "reason": reason, "timestamp": new Date(), "html": html
     }
     setMetaData(JSON.stringify(metadata));
   }
@@ -151,17 +148,17 @@ function setCurrentStatus() {
   var metadata = JSON.parse(getMetaData());
   if (metadata != null) {
     var last_response_time = formatDateTime(metadata['timestamp']);
-  }
-  if (currentAnswer == "Yes") {
-    setResult("success", "Success", metadata['reason'], metadata['html']);
-    if (last_response_time != undefined) {
-      answerState.innerHTML = "* Last recorded server response at " + last_response_time;
+    if (metadata["status"] == "Success") {
+      setResult("success", "Success", metadata['reason'], metadata['html']);
+      if (last_response_time != undefined) {
+        answerState.innerHTML = "* Last recorded server response at " + last_response_time;
+      }
     }
-  }
-  else if (currentAnswer == "No") {
-    setResult("danger", "Failure", metadata['reason'], metadata['html']);
-    if (last_response_time != undefined) {
-      answerState.innerHTML = "* Last recorded server response at " + last_response_time;
+    else if (metadata["status"] == "Failure") {
+      setResult("danger", "Failure", metadata['reason'], metadata['html']);
+      if (last_response_time != undefined) {
+        answerState.innerHTML = "* Last recorded server response at " + last_response_time;
+      }
     }
   }
 }
@@ -213,40 +210,33 @@ function apiCall() {
         if (request.status == 200) {
           try {
             var response = JSON.parse(request.responseText);
-            processPayload(response);
+            processResponse(response);
           }
           catch {
             setResult("danger", "Failure", "Error occured while parsing response")
-            setAnswer("No")
           }
         }
         else if (request.status == 400) {
           var errorResponse = JSON.parse(request.responseText);
           var errorMessage = parseError(errorResponse);
           setResult("danger", "Failure", errorMessage, html = true);
-          setAnswer("No")
         }
         else if (request.status == 404) {
           setResult("danger", "Failure", "Server returned 404")
-          setAnswer("No")
         }
         else if (request.status == 500) {
           setResult("danger", "Failure", "Server returned 500")
-          setAnswer("No")
         }
         else if (request.status == 429) {
           setResult("danger", "Failure", "Rate limited, please try again in some time!")
-          setAnswer("No")
         }
         else {
           setResult("danger", "Failure", request.responseText)
-          setAnswer("No")
         }
       }
     }
     request.onerror = function () {
       setResult("danger", "Failure", "Network Error, please check your internet connection!")
-      setAnswer("No")
     }
 
     request.send(JSON.stringify(payload));
