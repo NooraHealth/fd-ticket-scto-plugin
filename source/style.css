@@ -40,8 +40,12 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button:enabled:hover {
   background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #9e9e9e;
 }
 
 .status {

@@ -21,9 +21,6 @@ var apiUrl = getPluginParameter('apiUrl');
 var fdUrl = getPluginParameter('fdUrl');
 var currentAnswer = fieldProperties.CURRENT_ANSWER;
 
-
-
-
 headingElement.innerText = title || "FD Ticket Create";
 patientQueryHolder.innerText = patientQuery;
 languageHolder.innerText = language;
@@ -81,12 +78,14 @@ function processResponse(data) {
   var status = data['status'] == "success" ? 'Success' : 'Failure'
   var statusClass = data['status'] == "success" ? 'success' : 'danger';
   if (status == "Success") {
-    setResult(statusClass, status, "Ticket created!")
+    setResult(statusClass, status, "Ticket #" + data['ticket_id'] + " was created! ")
     var ticketUrl = fdUrl + "/a/tickets/" + data['ticket_id'];
     setAnswer(ticketUrl);
+    return true;
   }
   else if (status == "Failure") {
     setResult(statusClass, status, "Ticket couldn't be created!")
+    return false;
   }
 }
 
@@ -117,7 +116,6 @@ function makeHttpObject() {
   try {
     return new ActiveXObject('Microsoft.XMLHTTP')
   } catch (error) { }
-
   throw new Error('Could not create HTTP request object.')
 }
 
@@ -210,7 +208,10 @@ function apiCall() {
         if (request.status == 200) {
           try {
             var response = JSON.parse(request.responseText);
-            processResponse(response);
+            var check = processResponse(response);
+            if (check == true) {
+              goToNextField(true);
+            }
           }
           catch {
             setResult("danger", "Failure", "Error occured while parsing response")
@@ -234,6 +235,12 @@ function apiCall() {
           setResult("danger", "Failure", request.responseText)
         }
       }
+    }
+    request.onloadstart = function () {
+      signUpBtn.disabled = true
+    }
+    request.onloadend = function () {
+      signUpBtn.disabled = false
     }
     request.onerror = function () {
       setResult("danger", "Failure", "Network Error, please check your internet connection!")
