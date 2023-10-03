@@ -1,3 +1,8 @@
+# FD Ticket Plugin
+
+![](extras/plugin-preview.png)
+
+
 ## Required parameters
 
 | Key                   | Value                                                                                                                                                                                                 |
