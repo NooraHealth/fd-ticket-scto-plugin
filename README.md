@@ -1,5 +1,3 @@
-# FD Ticket Plugin
-
 ![](extras/plugin-preview.png)
 
 
