@@ -25,3 +25,4 @@ A special SurveyCTO plugin designed for teletrainers. Now, they can easily make 
 | `apiUrl`              | This is the URL of the API endpoint that will be invoked to create a ticket on Freshdesk.                                                                                                             |
 | `fdUrl`               | This is the URL of our Freshdesk workspace, which will be used to populate this field with a link to the ticket on Freshdesk.                                                                         |
 | `callName`            | This will contain the name of the form used to create the ticket on Freshdesk, providing context about the query for the Freshdesk ticket.                                                            |
+| `countryName`         | This will contain the name of the country the ticket needs to be assigned such as `India`, `Bangladesh` etc.           |
