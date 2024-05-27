@@ -8,18 +8,20 @@ var answerState = document.getElementById("answerState");
 var headingElement = document.getElementById("title");
 
 // References to values stored in the plug-in parameters
-var title = getPluginParameter('title');
-var patientName = getPluginParameter('patientName');
-var phoneNumber = getPluginParameter('phoneNumber');
-var patientQuery = getPluginParameter('patientQuery');
-var agentEmail = getPluginParameter('agentEmail');
-var projectId = getPluginParameter('projectId');
-var familyConnectedOnWa = getPluginParameter('familyConnectedOnWa');
-var language = getPluginParameter('language');
-var apiToken = getPluginParameter('apiToken');
-var apiUrl = getPluginParameter('apiUrl');
-var fdUrl = getPluginParameter('fdUrl');
-var currentAnswer = fieldProperties.CURRENT_ANSWER;
+var paramTitle = getPluginParameter('title');
+var paramPatientName = getPluginParameter('patientName');
+var paramPhoneNumber = getPluginParameter('phoneNumber');
+var paramPatientQuery = getPluginParameter('patientQuery');
+var paramAgentEmail = getPluginParameter('agentEmail');
+var paramProjectId = getPluginParameter('projectId');
+var paramFamilyConnectedOnWa = getPluginParameter('familyConnectedOnWa');
+var paramLanguage = getPluginParameter('language');
+var paramApiToken = getPluginParameter('apiToken');
+var paramApiUrl = getPluginParameter('apiUrl');
+var paramFdUrl = getPluginParameter('fdUrl');
+var paramCallName = getPluginParameter('callName');
+var paramCountryName = getPluginParameter('countryName')
+var paramCurrentAnswer = fieldProperties.CURRENT_ANSWER;
 
 headingElement.innerText = title || "FD Ticket Create";
 patientQueryHolder.innerText = patientQuery;
@@ -161,46 +163,70 @@ function setCurrentStatus() {
   }
 }
 
-function createPayload(name, phoneNumber, patientQuery, agentEmail, familyConnectedOnWa, projectId = "TT Check up - Experiment1", language = null, type = "Tele Trainer", country = "India") {
-  var yesValues = ["Yes", "YES", "yes", "1"];
-  var noValues = ["No", "NO", "no", "0"];
+function createPayload({
+	name,
+	phoneNumber,
+	patientQuery,
+	agentEmail,
+	familyConnectedOnWa,
+	projectId = "TT Check up - Experiment1",
+	callName = null,
+	language = null,
+	type = "Tele Trainer",
+	country = "India"
+}) {
+	var yesValues = ["Yes", "YES", "yes", "1"];
+	var noValues = ["No", "NO", "no", "0"];
 
-  var whatsappValue;
-  if (noValues.indexOf(familyConnectedOnWa) !== -1) {
-    whatsappValue = "No";
-  }
+	var whatsappValue;
+	if (noValues.indexOf(familyConnectedOnWa) !== -1) {
+		whatsappValue = "No";
+	}
 
-  if (yesValues.indexOf(familyConnectedOnWa) !== -1) {
-    whatsappValue = "Yes";
-  }
+	if (yesValues.indexOf(familyConnectedOnWa) !== -1) {
+		whatsappValue = "Yes";
+	}
 
-  return {
-    "name": name,
-    "phone": phoneNumber,
-    "type": type,
-    "subject": "TT Experiment 1 " + phoneNumber,
-    "description": patientQuery,
-    "tags": ["surveycto-plugin"],
-    "agent_email": agentEmail,
-    "custom_fields": {
-      "cf_project": projectId,
-      "cf_regional_language": language,
-      "cf_family_connected_on_wa": whatsappValue,
-      "cf_country": country
-    }
-  }
+	var description = "<strong> Query : </strong>" + patientQuery + "<br />";
+
+	if (callName !== null) {
+		description = "<strong>Mother Category :</strong> " + callName + "<br />" + description;
+	}
+
+	return {
+		"name": name,
+		"phone": phoneNumber,
+		"type": type,
+		"subject": projectId + " " + phoneNumber,
+		"description": description,
+		"tags": ["surveycto-plugin", agentEmail],
+		"custom_fields": {
+			"cf_project": projectId,
+			"cf_regional_language": language,
+			"cf_family_connected_on_wa": whatsappValue,
+			"cf_country": country
+		}
+	}
 }
 
 
 function apiCall() {
   try {
     request = makeHttpObject()
-    payload = createPayload(
-      patientName, phoneNumber, patientQuery, agentEmail, familyConnectedOnWa, projectId, language
-    )
+    payload = createPayload({
+      name: paramPatientName,
+      phoneNumber: paramPhoneNumber,
+      patientQuery: paramPatientQuery,
+      callName: paramCallName,
+      agentEmail: paramAgentEmail,
+      familyConnectedOnWa: paramFamilyConnectedOnWa,
+      projectId: paramProjectId,
+      language: paramLanguage,
+      country: paramCountryName
+    })
 
-    request.open('POST', apiUrl, true)
-    request.setRequestHeader('Authorization', 'Token ' + apiToken)
+    request.open('POST', paramApiUrl, true)
+    request.setRequestHeader('Authorization', 'Token ' + paramApiToken)
     request.setRequestHeader('Content-type', ' application/json')
 
     request.onreadystatechange = function () {
