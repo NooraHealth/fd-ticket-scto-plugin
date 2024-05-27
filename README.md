@@ -1,6 +1,15 @@
 ![](extras/plugin-preview.png)
 
 
+# Description
+A special SurveyCTO plugin designed for teletrainers. Now, they can easily make Freshdesk tickets for patient questions right within SurveyCTO. No extra steps of opening Freshdesk separately needed.
+
+[![Download now](extras/download-button.png)](/fd-ticket.fieldplugin.zip)
+
+
+[Freshdesk](https://www.freshworks.com/freshdesk/) is a powerful and intuitive cloud-based ticketing system that enables companies to streamline customer support, automate workflows, and deliver personalized service through a unified platform
+
+
 ## Required parameters
 
 | Key                   | Value                                                                                                                                                                                                 |
