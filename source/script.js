@@ -23,9 +23,9 @@ var paramCallName = getPluginParameter('callName');
 var paramCountryName = getPluginParameter('countryName')
 var paramCurrentAnswer = fieldProperties.CURRENT_ANSWER;
 
-headingElement.innerText = title || "FD Ticket Create";
-patientQueryHolder.innerText = patientQuery;
-languageHolder.innerText = language;
+headingElement.innerText = paramTitle || "FD Ticket Create";
+patientQueryHolder.innerText = paramPatientQuery;
+languageHolder.innerText = paramLanguage;
 setCurrentStatus();
 
 
