@@ -1,6 +1,7 @@
 // References to field elements
 var patientQueryHolder = document.getElementById("patientQuery")
 var languageHolder = document.getElementById("language")
+var usernameHolder = document.getElementById("username")
 var signUpBtn = document.getElementById('signup');
 var result = document.getElementById('statusBox');
 var reasonDiv = document.getElementById('reasonBox');
@@ -26,6 +27,7 @@ var paramCurrentAnswer = fieldProperties.CURRENT_ANSWER;
 headingElement.innerText = paramTitle || "FD Ticket Create";
 patientQueryHolder.innerText = paramPatientQuery;
 languageHolder.innerText = paramLanguage;
+usernameHolder.innerText = paramAgentEmail;
 setCurrentStatus();
 
 
