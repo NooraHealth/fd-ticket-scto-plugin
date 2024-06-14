@@ -83,7 +83,7 @@ function processResponse(data) {
   var statusClass = data['status'] == "success" ? 'success' : 'danger';
   if (status == "Success") {
     setResult(statusClass, status, "Ticket #" + data['ticket_id'] + " was created! ")
-    var ticketUrl = fdUrl + "/a/tickets/" + data['ticket_id'];
+    var ticketUrl = paramFdUrl + "/a/tickets/" + data['ticket_id'];
     setAnswer(ticketUrl);
     return true;
   }
