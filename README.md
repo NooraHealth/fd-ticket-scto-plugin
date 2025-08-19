@@ -39,11 +39,11 @@ Follow the guide at [Working with spreadsheet form definitions](https://support.
 
 ### 3. Download and Upload the Plugin
 
-1. Download the plugin file (`fd-ticket.fieldplugin.zip`) from the download link above
+- Download the plugin file (`fd-ticket.fieldplugin.zip`) from the download link above
 
-2. **Important**: Ensure the file name doesn't contain any trailing numbers like `(1)`, `(2)` which are automatically added by your system if you already have the plugin downloaded. Remove these and ensure the file name follows the format: `fd-ticket.fieldplugin.zip`
+   > **Note**: Ensure the file name doesn't contain any trailing numbers like `(1)`, `(2)` which are automatically added by your system if you already have the plugin downloaded. Remove these and ensure the file name follows the format: `fd-ticket.fieldplugin.zip`
 
-3. Follow the guide at [Using field plug-ins](https://docs.surveycto.com/02-designing-forms/03-advanced-topics/06.using-field-plug-ins.html) to attach the plugin as an attachment to your form
+- Follow the guide at [Using field plug-ins](https://docs.surveycto.com/02-designing-forms/03-advanced-topics/06.using-field-plug-ins.html) to attach the plugin as an attachment to your form
 
 ### 4. Configure the Plugin
 
@@ -51,7 +51,7 @@ Once the plugin is attached, you can configure it by setting the appearance of t
 
 ### 5. Update Configuration for Production
 
-**Important**: Before using this form in production, you must update the following values in the sample form:
+> **Note**: Before using this form in `production`, you must update the following values in the sample form:
 
 - **`apiUrl`** and **`apiToken`**: Contact Abhishek to obtain the correct API credentials for your environment
 - **`projectId`**: Update this value to match your specific project requirements
