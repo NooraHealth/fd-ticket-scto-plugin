@@ -41,8 +41,8 @@ Follow the guide at [Working with spreadsheet form definitions](https://support.
 
 - Download the plugin file (`fd-ticket.fieldplugin.zip`) from the download link above
 
-   > **Note**: Ensure the file name doesn't contain any trailing numbers like `(1)`, `(2)` which are automatically added by your system if you already have the plugin downloaded. Remove these and ensure the file name follows the format: `fd-ticket.fieldplugin.zip`
-
+  > **Note**: Ensure the file name doesn't contain any trailing numbers like `(1)`, `(2)` which are automatically added by your system if you already have the plugin downloaded. Remove these and ensure the file name follows the format: `fd-ticket.fieldplugin.zip`
+  >
 - Follow the guide at [Using field plug-ins](https://docs.surveycto.com/02-designing-forms/03-advanced-topics/06.using-field-plug-ins.html) to attach the plugin as an attachment to your form
 
 ### 4. Configure the Plugin
@@ -60,5 +60,5 @@ These values are currently set to placeholder/default values in the test form an
 
 ## More resources
 
-* **Test form**: 
-  [extras/test-form](./extras/test-form/fd-plugin-demo.xlsx)
+* **Test form**:
+  [Sample FD Plugin Form](./extras/test-form/fd-plugin-demo.xlsx)
