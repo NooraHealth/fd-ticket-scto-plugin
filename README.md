@@ -60,5 +60,5 @@ These values are currently set to placeholder/default values in the test form an
 
 ## More resources
 
-* **Test form**
+* **Test form**: 
   [extras/test-form](./extras/test-form/fd-plugin-demo.xlsx)
