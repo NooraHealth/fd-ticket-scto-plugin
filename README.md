@@ -1,3 +1,5 @@
+> **Deprecated**: This project has been moved under the centralized repository and can be [accessed here](https://github.com/NooraHealth/scto-plugins/tree/main/_plugins/freshdesk-ticket).
+
 ![](extras/plugin-preview.png)
 
 # Description
